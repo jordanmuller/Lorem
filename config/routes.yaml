@@ -1,0 +1,14 @@
+home:
+  path: /
+  controller: App\Controller\HomeController::index
+
+properties:
+  path: /properties
+  controller: App\Controller\PropertyController::index
+
+property:
+  path: /properties/{id}
+  controller: App\Controller\PropertyController::show
+  requirements:
+    id: '\d+'
+
