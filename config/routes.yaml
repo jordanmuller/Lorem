@@ -3,12 +3,33 @@ home:
   controller: App\Controller\HomeController::index
 
 properties:
-  path: /properties
+  path: /property
   controller: App\Controller\PropertyController::index
 
 property:
-  path: /properties/{id}
+  path: /property/{id}
   controller: App\Controller\PropertyController::show
   requirements:
     id: '\d+'
 
+admin_property_index:
+  path: /admin/
+  controller: App\Controller\Admin\AdminPropertyController::index
+
+admin_property_save:
+  path: /admin/property/save
+  controller: App\Controller\Admin\AdminPropertyController::save
+
+admin_property_update:
+  path: /admin/property/{id}
+  methods: [GET|POST]
+  controller: App\Controller\Admin\AdminPropertyController::update
+  requirements:
+    id: '\d+'
+
+admin_property_delete:
+  path: /admin/property/{id}
+  methods: [DELETE]
+  controller: App\Controller\Admin\AdminPropertyController::delete
+  requirements:
+    id: '\d+'

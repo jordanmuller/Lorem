@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Entity\Property;
-use App\Repository\PropertyRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,16 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 class PropertyController extends AbstractController
 {
     use Controller;
-
-    /**
-     * @var PropertyRepository
-     */
-    private $repo;
-
-    public function __construct(PropertyRepository $repo)
-    {
-        $this->repo = $repo;
-    }
 
     public function index(): Response
     {

@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Update property</h1>
+        {{ include ('admin/property/form.html.twig', {form: form, button: 'Update'}) }}
+    </div>
+{% endblock %}
