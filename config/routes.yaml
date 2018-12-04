@@ -1,3 +1,4 @@
+# Anonymous Routes
 home:
   path: /
   controller: App\Controller\HomeController::index
@@ -12,6 +13,16 @@ property:
   requirements:
     id: '\d+'
 
+# Authentication routes
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+logout:
+  path: /logout
+  controller: App\Controller\SecurityController::logout
+
+# Admin routes
 admin_property_index:
   path: /admin/
   controller: App\Controller\Admin\AdminPropertyController::index
