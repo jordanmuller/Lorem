@@ -4,8 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\{
+    QueryBuilder,
+    Query
+};
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\PropertySearch;
 
 /**
  * @method Property|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,11 +28,10 @@ class PropertyRepository extends ServiceEntityRepository
      * Return all properties which aren't sold yet
      * @return Property[]
      */
-    public function findAllVisible(): array
+    public function findAllVisibleQuery(): Query
     {
         return $this->findVisibleQuery()
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 
     /**
@@ -41,6 +44,20 @@ class PropertyRepository extends ServiceEntityRepository
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findSearchedVisibleQuery(PropertySearch $propertySearch): Query
+    {   
+        if (!empty($propertySearch->getMaxPrice())) {
+            $qb->andWhere('p.price <= :maxPrice')
+                ->setParameter('maxPrice', $propertySearch->getMaxPrice());    
+        }
+
+        if (!empty($propertySearch->getMinSurface())) {
+            $qb->andWhere('p.surface >= :minSurface')
+                ->setParameter('minSurface', $propertySearch->getMinSurface());
+        }
+        return $qb->getQuery();
     }
 
     /**

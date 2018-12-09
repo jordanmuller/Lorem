@@ -7,7 +7,7 @@ properties:
   path: /property
   controller: App\Controller\PropertyController::index
 
-property:
+property_show:
   path: /property/{id}
   controller: App\Controller\PropertyController::show
   requirements:
