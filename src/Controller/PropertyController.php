@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Contact;
 use App\Entity\Property;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Form\ContactType;
+use App\Notification\ContactNotification;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -18,7 +20,6 @@ class PropertyController extends AbstractController
 
     /**
      * Index All properties page
-     * @param Paginator Interface $paginator
      * @param Request $request
      * @return Response
      */
@@ -52,18 +53,38 @@ class PropertyController extends AbstractController
     /**
      * Show only one property
      * @param Property $property
-     * @ParamConverter("property", class="App\Entity\Property")
+     * @param Request $request
      * @return Response
+     * @ParamConverter("property", class="App\Entity\Property")
      */
-    public function show(Property $property): Response
+    public function show(Property $property, Request $request, ContactNotification $notification): Response
     {
         // ->find() is done automatically by Symfony
         // $property = $this->repo->find($property);
+
+        $contact = new Contact();
+        $contact->setProperty($property);
+
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $notification->notify($contact);
+            $this->addFlash('success', 'Votre email a bien été envoyé');
+
+            return $this->redirectToRoute('property_show', [
+                'id' => $property->getId()
+            ]);
+
+        }
+
         return $this->render(
             'property/show.html.twig',
             [
                 'current_menu' => 'properties',
-                'property' => $property
+                'property' => $property,
+                'form' => $form->createView()
             ]
         );
     }
