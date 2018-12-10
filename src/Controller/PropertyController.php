@@ -32,7 +32,7 @@ class PropertyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $dataSearch = $form->getData();
             $properties = $this->getPagination(
-                $this->repo->findAllVisibleQuery($dataSearch), 
+                $this->repo->findSearchedVisibleQuery($dataSearch),
                 $request
             );
         } else {

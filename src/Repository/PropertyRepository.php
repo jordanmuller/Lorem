@@ -47,7 +47,9 @@ class PropertyRepository extends ServiceEntityRepository
     }
 
     public function findSearchedVisibleQuery(PropertySearch $propertySearch): Query
-    {   
+    {
+        $qb = $this->findVisibleQuery();
+
         if (!empty($propertySearch->getMaxPrice())) {
             $qb->andWhere('p.price <= :maxPrice')
                 ->setParameter('maxPrice', $propertySearch->getMaxPrice());    
@@ -56,6 +58,16 @@ class PropertyRepository extends ServiceEntityRepository
         if (!empty($propertySearch->getMinSurface())) {
             $qb->andWhere('p.surface >= :minSurface')
                 ->setParameter('minSurface', $propertySearch->getMinSurface());
+        }
+
+        if (!empty($propertySearch->getOptions())) {
+            // Avoid SQL injections
+            $k = 0;
+            foreach ($propertySearch->getOptions() as $option) {
+                $qb = $qb->andWhere(":option$k MEMBER OF p.options")
+                    ->setParameter("option$k", $option);
+                $k++;
+            }
         }
         return $qb->getQuery();
     }

@@ -2,12 +2,17 @@
 
 namespace App\Form;
 
-use App\Entity\PropertySearch;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use App\Entity\{
+    Option,
+    PropertySearch
+};
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\{
+    AbstractType,
+    FormBuilderInterface
+};
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PropertySearchType extends AbstractType
 {
@@ -27,6 +32,14 @@ class PropertySearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Surface minimale'
                 ]
+            ])
+            ->add('options', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => Option::class,
+                'choice_label' => 'name',
+                'multiple' => true
+
             ])
         ;
     }
