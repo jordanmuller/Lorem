@@ -8,6 +8,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
+                    {% if property.filename %}
+                        {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
+                        <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('medium') }}" alt="Image" class="card-img-top">
+                    {% endif %}
                 </div>
                 <div class="col-md-4">
                     <h1>{{ property.title }}</h1>
@@ -52,6 +56,15 @@
             </div>
             <div class="col-md-4">
                 <h2>Specificities</h2>
+                {% if property.options %}
+                <ul class="list-group">
+                    {% for option in property.options %}
+                        <li class="list-group-item">
+                            {{ option.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ use App\Entity\Property;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,8 +31,13 @@ class PropertyType extends AbstractType
             // It's a special ChoiceType field which load options form a Doctrine Entity
             ->add('options', EntityType::class, [
                 'class' => Option::class,
+                'required' => false,
                 'choice_label' => 'name',
                 'multiple' => true
+            ])
+            // To add an Image File
+            ->add('imageFile', FileType::class, [
+                'required' => false
             ])
             ->add('city')
             ->add('address')

@@ -7,7 +7,11 @@ use App\Entity\Option;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\{RedirectResponse, Request, Response};
+use Symfony\Component\HttpFoundation\{
+    RedirectResponse,
+    Request,
+    Response
+};
 
 class AdminPropertyController extends AbstractController
 {
@@ -26,6 +30,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @return Response
      */
     public function save(Request $request)
@@ -51,9 +56,13 @@ class AdminPropertyController extends AbstractController
 
     /**
      * @param Property $property
+     * @param Request $request
+     * @param CacheManager $cacheManager
+     * @param UploaderHelper $helper
      * @return Response
      */
-    public function update(Property $property, Request $request): Response
+    public function update(
+        Property $property, Request $request): Response
     {
         $form = $this->createForm(PropertyType::class, $property);
 

@@ -1,5 +1,10 @@
 <div class="card mb-4">
+    {% if property.filename %}
+        {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
+        <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="Image" class="card-img-top">
+    {% endif %}
     <div class="card-body">
+
         <h5 class="card-title">
             <a href="{{ path('property_show', {id: property.id}) }}">
                 {{ property.title }}
