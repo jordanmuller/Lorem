@@ -21,12 +21,14 @@
 
             <div class="row">
                 <div class="col-md-8">
-                    {% if property.pictures %}
-                        {% for picture in property.pictures %}
-                        {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
-                            <img src="{{ vich_uploader_asset(picture, 'imageFile') | imagine_filter('medium') }}" alt="Image" class="card-img-top">
-                        {% endfor %}
-                    {% endif %}
+                    <div data-slider>
+                        {% if property.pictures %}
+                            {% for picture in property.pictures %}
+                                {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
+                                <img src="{{ vich_uploader_asset(picture, 'imageFile') | imagine_filter('medium') }}" alt="Image" class="card-img-top">
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <h1>{{ property.title }}</h1>
@@ -100,6 +102,9 @@
                 {% endif %}
             </div>
         </div>
+
+        {# Map part #}
+        <div id="map" style="width: 100%; height: 400px" data-lat="{{ property.lat }}" data-lng="{{ property.lng }}"></div>
     </div>
 {% endblock %}
 
