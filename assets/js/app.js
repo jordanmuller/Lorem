@@ -12,15 +12,31 @@ require('../css/app.css');
 require('select2');
 
 $('select').select2();
-const contactButton = document.querySelector('#contactButton');
-const contactForm = document.querySelector('#contactForm');
 
-contactButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    contactForm.style.display = 'block';
-    contactButton.style.display = 'none';
-})
-
+// Delete of Picture
+document.querySelectorAll('[data-delete]').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        fetch(link.getAttribute('href'), {
+            method: 'DELETE',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'_token': link.dataset.token})
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // On récupère le parent du parent du lien pour supprimer le parent du lien
+                    link.parentNode.parentNode.removeChild(link.parentNode)
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch(e => alert(e));
+    });
+});
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // var $ = require('jquery');

@@ -1,7 +1,7 @@
 <div class="card mb-4">
-    {% if property.filename %}
+    {% if property.picture %}
         {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
-        <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="Image" class="card-img-top">
+        <img src="{{ vich_uploader_asset(property.picture, 'imageFile') | imagine_filter('thumb') }}" alt="Image" class="card-img-top">
     {% endif %}
     <div class="card-body">
 

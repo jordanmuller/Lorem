@@ -36,8 +36,10 @@ class PropertyType extends AbstractType
                 'multiple' => true
             ])
             // To add an Image File
-            ->add('imageFile', FileType::class, [
-                'required' => false
+            // Field picturesFiles need to be defined in owner Entity: Property
+            ->add('pictureFiles', FileType::class, [
+                'required' => false,
+                'multiple' => true
             ])
             ->add('city')
             ->add('address')

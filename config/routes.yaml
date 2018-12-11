@@ -44,3 +44,10 @@ admin_property_delete:
   controller: App\Controller\Admin\AdminPropertyController::delete
   requirements:
     id: '\d+'
+
+admin_picture_delete:
+  path: /admin/picture/{id}
+  methods: [DELETE]
+  controller: App\Controller\Admin\AdminPictureController::delete
+  requirements:
+    id: '\d+'
