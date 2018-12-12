@@ -314,7 +314,6 @@ class Property
             $this->options[] = $option;
             $option->addProperty($this);
         }
-
         return $this;
     }
 
@@ -324,7 +323,6 @@ class Property
             $this->options->removeElement($option);
             $option->removeProperty($this);
         }
-
         return $this;
     }
 

@@ -1,18 +1,21 @@
-<div class="card mb-4">
-    {% if property.picture %}
-        {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
-        <img src="{{ vich_uploader_asset(property.picture, 'imageFile') | imagine_filter('thumb') }}" alt="Image" class="card-img-top">
-    {% endif %}
-    <div class="card-body">
+{# A chaque update le cache est mis à jour #}
+{#{% cache 'property' ~ property.id property.updatedAt.timestamp %}#}
+    <div class="card mb-4">
+        {% if property.picture %}
+            {# vich_uploader_asset load automatically path to imageFile passed in parameters  #}
+            <img src="{{ vich_uploader_asset(property.picture, 'imageFile') | imagine_filter('thumb') }}" alt="Image" class="card-img-top">
+        {% endif %}
+        <div class="card-body">
 
-        <h5 class="card-title">
-            <a href="{{ path('property_show', {id: property.id}) }}">
-                {{ property.title }}
-            </a>
-        </h5>
-        <p class="card-text">{{ property.surface }} m² - {{ property.city }} ({{ property.postalCode }})</p>
-        <div class="text-danger">
-            {{ property.formattedPrice }} €
+            <h5 class="card-title">
+                <a href="{{ path('property_show', {id: property.id}) }}">
+                    {{ property.title }}
+                </a>
+            </h5>
+            <p class="card-text">{{ property.surface }} m² - {{ property.city }} ({{ property.postalCode }})</p>
+            <div class="text-danger">
+                {{ property.formattedPrice }} €
+            </div>
         </div>
     </div>
-</div>
+{#{% endcache %}#}

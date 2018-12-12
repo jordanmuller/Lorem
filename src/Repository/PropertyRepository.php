@@ -8,6 +8,7 @@ use Doctrine\ORM\{
     QueryBuilder,
     Query
 };
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\PropertySearch;
 
@@ -19,9 +20,12 @@ use App\Entity\PropertySearch;
  */
 class PropertyRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $paginator;
+
+    public function __construct(RegistryInterface $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Property::class);
+        $this->paginator = $paginator;
     }
 
     /**
@@ -52,7 +56,7 @@ class PropertyRepository extends ServiceEntityRepository
 
         if (!empty($propertySearch->getMaxPrice())) {
             $qb->andWhere('p.price <= :maxPrice')
-                ->setParameter('maxPrice', $propertySearch->getMaxPrice());    
+                ->setParameter('maxPrice', $propertySearch->getMaxPrice());
         }
 
         if (!empty($propertySearch->getMinSurface())) {
@@ -61,7 +65,7 @@ class PropertyRepository extends ServiceEntityRepository
         }
 
         if (null !== $propertySearch->getLat() && null !== $propertySearch->getLng() && null !== $propertySearch->getDistance()) {
-            $qb->select('p')
+            $qb
                 ->andWhere('( 6353 * 2 * ASIN(
                     SQRT( POWER(SIN((p.lat - :lat) * pi()/180 / 2), 2)
                         + COS(p.lat * pi()/180 ) * COS(:lat * pi()/180)

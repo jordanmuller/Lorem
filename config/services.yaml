@@ -30,3 +30,15 @@ services:
         tags:
             # We say this service is a new doctrine.event.subscriber
             - { name: doctrine.event_subscriber }
+
+    Twig\CacheExtension\CacheProviderInterface:
+        class: Twig\CacheExtension\CacheProvider\PsrCacheAdapter
+
+    # Implements LifetimeCacheStrategy to CacheStrategyInterface
+    Twig\CacheExtension\CacheStrategyInterface:
+        class: Twig\CacheExtension\CacheStrategy\LifetimeCacheStrategy
+
+    # The __constcruct needs CacheStrategyInterface
+    Twig\CacheExtension\Extension:
+        tags:
+            - { name: twig.extension }
